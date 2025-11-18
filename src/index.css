@@ -15,10 +15,11 @@
   html {
     font-family: var(--font-sans);
     font-feature-settings: "rlig" 1, "calt" 1;
+    background: #000; /* enforce pure black */
   }
 
   body {
-    @apply antialiased;
+    @apply antialiased bg-black text-white;
   }
 }
 
@@ -42,5 +43,50 @@
     --tw-exit-rotate: initial;
     --tw-exit-translate-x: initial;
     --tw-exit-translate-y: initial;
+  }
+
+  /* Glitch effect utilities */
+  .glitch {
+    position: relative;
+    text-shadow: 0 0 2px rgba(255,255,255,0.2);
+  }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    clip-path: inset(0 0 0 0);
+  }
+  .glitch::before {
+    color: rgba(255,210,125,0.9);
+    transform: translate(1px, 0);
+    animation: glitchShift 2000ms infinite linear alternate-reverse;
+    mix-blend-mode: screen;
+  }
+  .glitch::after {
+    color: rgba(100,200,255,0.7);
+    transform: translate(-1px, 0);
+    animation: glitchShift2 1800ms infinite linear alternate;
+    mix-blend-mode: screen;
+  }
+
+  @keyframes glitchShift {
+    0% { clip-path: inset(0 0 85% 0); }
+    20% { clip-path: inset(10% 0 60% 0); }
+    40% { clip-path: inset(40% 0 20% 0); }
+    60% { clip-path: inset(70% 0 5% 0); }
+    80% { clip-path: inset(30% 0 40% 0); }
+    100% { clip-path: inset(0 0 85% 0); }
+  }
+  @keyframes glitchShift2 {
+    0% { clip-path: inset(80% 0 0 0); }
+    20% { clip-path: inset(55% 0 15% 0); }
+    40% { clip-path: inset(25% 0 35% 0); }
+    60% { clip-path: inset(5% 0 60% 0); }
+    80% { clip-path: inset(35% 0 30% 0); }
+    100% { clip-path: inset(80% 0 0 0); }
   }
 }
